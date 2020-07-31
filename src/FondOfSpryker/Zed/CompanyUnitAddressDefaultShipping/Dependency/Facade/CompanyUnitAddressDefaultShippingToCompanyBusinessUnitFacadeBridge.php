@@ -5,7 +5,9 @@ namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacade;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 
 class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge implements CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
 {
@@ -16,10 +18,10 @@ class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge impleme
 
     /**
      * CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge constructor.
-     *
-     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacade $companyBusinessUnitFacade
+     * 
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      */
-    public function __construct(CompanyBusinessUnitFacade $companyBusinessUnitFacade)
+    public function __construct(CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
     {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
     }

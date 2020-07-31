@@ -3,13 +3,21 @@
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model;
 
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
+use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingEntityManagerInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessUnitDefaultShippingAddressSaverInterface
 {
+    /**
+     * @var \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
+     */
+    private $companyUnitAddressFacade;
+
     /**
      * @var \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
      */
@@ -21,9 +29,11 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
      * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingEntityManagerInterface $entityManager
      */
     public function __construct(
-        CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+        CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
     ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
+        $this->companyUnitAddressFacade = $companyUnitAddressFacade;
     }
 
     /**
@@ -42,12 +52,30 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
                 ->setIdCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit())
                 ->setDefaultShippingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
+            $companyUnitAddressCollectionTransfer = $this->getCompanyUnitAddressCollectionByIdCompanyBusinessUnit($companyBusinessUnitTransfer);
+            $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollectionTransfer);
+            
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
         }
 
         return (new CompanyUnitAddressResponseTransfer())
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    protected function getCompanyUnitAddressCollectionByIdCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyUnitAddressCollectionTransfer
+    {
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+
+        return $this->companyUnitAddressFacade->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
     }
 
 }
