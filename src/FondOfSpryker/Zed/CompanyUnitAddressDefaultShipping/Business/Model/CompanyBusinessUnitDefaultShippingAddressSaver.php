@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model;
 
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingEntityManagerInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
@@ -24,9 +23,8 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
     private $companyBusinessUnitFacade;
 
     /**
-     * CompanyBusinessUnitDefaultShippingAddressSaver constructor.
-     *
-     * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingEntityManagerInterface $entityManager
+     * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
      */
     public function __construct(
         CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
@@ -44,8 +42,8 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
     public function saveDefaultShippingAddressIdToCompanyBusinessUnit(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-
-        if ($companyUnitAddressTransfer->getFkCompanyBusinessUnit()
+        if (
+            $companyUnitAddressTransfer->getFkCompanyBusinessUnit()
             && $companyUnitAddressTransfer->getIsDefaultShipping()
         ) {
             $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
@@ -54,8 +52,8 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
 
             $companyUnitAddressCollectionTransfer = $this->getCompanyUnitAddressCollectionByIdCompanyBusinessUnit($companyBusinessUnitTransfer);
             $companyBusinessUnitTransfer->setAddressCollection($companyUnitAddressCollectionTransfer);
-            
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
+
+            $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
         }
 
         return (new CompanyUnitAddressResponseTransfer())
@@ -70,12 +68,10 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
      */
     protected function getCompanyUnitAddressCollectionByIdCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyUnitAddressCollectionTransfer
-    {
+    ): CompanyUnitAddressCollectionTransfer {
         $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
             ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
         return $this->companyUnitAddressFacade->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
     }
-
 }

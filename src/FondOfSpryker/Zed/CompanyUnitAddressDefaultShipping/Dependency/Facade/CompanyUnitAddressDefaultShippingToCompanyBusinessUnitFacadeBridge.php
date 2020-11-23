@@ -12,13 +12,11 @@ use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge implements CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacade
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
      */
     protected $companyBusinessUnitFacade;
 
     /**
-     * CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge constructor.
-     * 
      * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      */
     public function __construct(CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
