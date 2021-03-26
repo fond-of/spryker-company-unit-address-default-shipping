@@ -24,8 +24,6 @@ class CompanyUnitAddressDefaultShippingBusinessFactory extends AbstractBusinessF
 
     /**
      * @return \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
-     * 
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getCompanyBusinessUnitFacade(): CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
     {
@@ -34,8 +32,6 @@ class CompanyUnitAddressDefaultShippingBusinessFactory extends AbstractBusinessF
 
     /**
      * @return \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getCompanyUnitAddressFacade(): CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
     {

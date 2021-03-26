@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business;
 
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacadeInterface;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -13,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUnitAddressDefaultShippingFacade extends AbstractFacade implements CompanyUnitAddressDefaultShippingFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

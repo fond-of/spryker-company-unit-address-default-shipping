@@ -20,6 +20,4 @@ interface CompanyUnitAddressDefaultShippingFacadeInterface
     public function saveDefaultShippingAddressIdToCompanyBusinessUnit(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer;
-
-
 }

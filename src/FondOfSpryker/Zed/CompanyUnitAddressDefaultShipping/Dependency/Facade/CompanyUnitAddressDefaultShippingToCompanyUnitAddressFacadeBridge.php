@@ -14,8 +14,6 @@ class CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge implemen
     protected $companyUnitAddressFacade;
 
     /**
-     * CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge constructor.
-     *
      * @param \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface $companyUnitAddressFacade
      */
     public function __construct(CompanyUnitAddressFacadeInterface $companyUnitAddressFacade)
@@ -25,7 +23,7 @@ class CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge implemen
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-     * 
+     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyUnitAddressCollection(

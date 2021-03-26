@@ -9,7 +9,7 @@ interface CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-     * 
+     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyUnitAddressCollection(
