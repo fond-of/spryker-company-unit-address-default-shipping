@@ -3,15 +3,9 @@
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\ProductListBrandConnector\Business\ProductListBrandConnectorFacadeInterface;
-use Generated\Shared\Transfer\BrandRelationTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 
 class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridgeTest extends Unit
 {
@@ -37,7 +31,7 @@ class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridgeTest ext
     {
         parent::_before();
 
-        $this->companyBusinessUnitFacadeMock = $this->getMockBuilder(CompanyUnitAddressFacadeInterface::class)
+        $this->companyBusinessUnitFacadeMock = $this->getMockBuilder(CompanyBusinessUnitFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 

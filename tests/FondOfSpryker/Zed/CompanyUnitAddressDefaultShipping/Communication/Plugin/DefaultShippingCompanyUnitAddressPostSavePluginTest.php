@@ -3,10 +3,10 @@
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacadeInterface;
-use FondOfSpryker\Zed\ProductListCompanyBrandConnector\Business\ProductListCompanyBrandConnectorFacadeInterface;
+use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacade;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
 {
@@ -18,7 +18,7 @@ class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacadeInterface
      */
-    protected $companyUnitAddressDefaultShippingFacadeInterface;
+    protected $companyUnitAddressDefaultShippingFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer
@@ -35,7 +35,7 @@ class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
      */
     protected function _before(): void
     {
-        $this->companyUnitAddressDefaultShippingFacadeInterface = $this->getMockBuilder(CompanyUnitAddressDefaultShippingFacadeInterface::class)
+        $this->companyUnitAddressDefaultShippingFacadeMock = $this->getMockBuilder(CompanyUnitAddressDefaultShippingFacade::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -48,7 +48,7 @@ class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
             ->getMock();
 
         $this->defaultShippingCompanyUnitAddressPostSavePlugin = new class (
-            $this->companyUnitAddressDefaultShippingFacadeInterface
+            $this->companyUnitAddressDefaultShippingFacadeMock
         ) extends DefaultShippingCompanyUnitAddressPostSavePlugin {
             /**
              * @var \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacadeInterface
@@ -56,18 +56,17 @@ class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
             protected $companyUnitAddressDefaultShippingFacade;
 
             /**
-             *  constructor.
-             * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacadeInterface $companyUnitAddressDefaultShippingFacade
+             * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacade $companyUnitAddressDefaultShippingFacade
              */
-            public function __construct(CompanyUnitAddressDefaultShippingFacadeInterface $companyUnitAddressDefaultShippingFacade)
+            public function __construct(CompanyUnitAddressDefaultShippingFacade $companyUnitAddressDefaultShippingFacade)
             {
                 $this->companyUnitAddressDefaultShippingFacade = $companyUnitAddressDefaultShippingFacade;
             }
 
             /**
-             * @return \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\CompanyUnitAddressDefaultShippingFacadeInterface
+             * @return \Spryker\Zed\Kernel\Business\AbstractFacade
              */
-            public function getFacade(): CompanyUnitAddressDefaultShippingFacadeInterface
+            public function getFacade(): AbstractFacade
             {
                 return $this->companyUnitAddressDefaultShippingFacade;
             }
@@ -79,7 +78,7 @@ class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
      */
     public function testPostSave(): void
     {
-        $this->productListCompanyBrandConnectorFacadeMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressDefaultShippingFacadeMock->expects($this->atLeastOnce())
             ->method('saveDefaultShippingAddressIdToCompanyBusinessUnit')
             ->with($this->companyUnitAddressTransferMock)
             ->willReturn($this->companyUnitAddressResponseTransferMock);
