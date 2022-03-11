@@ -2,6 +2,8 @@
 
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model;
 
+use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\CompanyUnitAddressDefaultShippingEvents;
+use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -23,15 +25,23 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
     private $companyBusinessUnitFacade;
 
     /**
+     * @var \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeInterface
+     */
+    private $eventFacade;
+
+    /**
      * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
+     * @param \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeInterface $eventFacade
      */
     public function __construct(
         CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
+        CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade,
+        CompanyUnitAddressDefaultShippingiToEventFacadeInterface $eventFacade
     ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
         $this->companyUnitAddressFacade = $companyUnitAddressFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -56,6 +66,11 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
             $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
         }
 
+        $this->triggerEvent(
+            CompanyUnitAddressDefaultShippingEvents::ENTITY_SPY_COMPANY_UNIT_ADDRESS_UPDATE,
+            $companyUnitAddressTransfer
+        );
+
         return (new CompanyUnitAddressResponseTransfer())
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer)
             ->setIsSuccessful(true);
@@ -73,5 +88,20 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
             ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
         return $this->companyUnitAddressFacade->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return void
+     */
+    protected function triggerEvent(string $eventName, CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    {
+        if ($this->eventFacade === null) {
+            return;
+        }
+
+        $this->eventFacade->trigger($eventName, $companyUnitAddressTransfer);
     }
 }

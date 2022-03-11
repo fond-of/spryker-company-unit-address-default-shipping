@@ -4,10 +4,8 @@ namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model\CompanyBusinessUnitDefaultShippingAddressSaverInterface;
-use FondOfSpryker\Zed\ProductListCompanyBrandConnector\Business\Model\CompanyBrandRelationWriterInterface;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\ProductListCompanyRelationTransfer;
 
 class CompanyUnitAddressDefaultShippingFacadeTest extends Unit
 {
@@ -66,7 +64,7 @@ class CompanyUnitAddressDefaultShippingFacadeTest extends Unit
      */
     public function testSaveDefaultShippingAddressIdToCompanyBusinessUnit(): void
     {
-        $this->productListCompanyBrandConnectorBusinessFactoryMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressDefaultShippingBusinessFactoryMock->expects($this->atLeastOnce())
             ->method('createCompanyBusinessUnitDefaultShippingAddressSaver')
             ->willReturn($this->companyBusinessUnitDefaultShippingAddressSaverMock);
 
@@ -75,8 +73,8 @@ class CompanyUnitAddressDefaultShippingFacadeTest extends Unit
             ->with($this->companyUnitAddressTransferMock)
             ->willReturn($this->companyUnitAddressResponseTransferMock);
 
-        $this->assertEquals(
-            $this->companyUnitAddressResponseTransferMock,
+        $this->assertInstanceOf(
+            CompanyUnitAddressResponseTransfer::class,
             $this->companyUnitAddressDefaultShippingFacade->saveDefaultShippingAddressIdToCompanyBusinessUnit(
                 $this->companyUnitAddressTransferMock
             )
