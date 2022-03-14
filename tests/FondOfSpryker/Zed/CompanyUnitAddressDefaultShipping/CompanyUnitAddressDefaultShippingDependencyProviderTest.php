@@ -3,13 +3,11 @@
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface;
-use Spryker\Zed\Event\Business\EventFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Locator;
 
@@ -18,7 +16,7 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
     /**
      * @var \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\CompanyUnitAddressDefaultShippingDependencyProvider
      */
-    protected $companyUnitAddressDefaultShippingDependencyProvider;
+    protected $dependencyProvider;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Container
@@ -44,11 +42,6 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface
      */
     protected $companyUnitAddressFacadeMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\EventFacadeInterface
-     */
-    protected $eventFacadeMock;
 
     /**
      * @return void
@@ -77,12 +70,7 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-
-        $this->eventFacadeMock = $this->getMockBuilder(EventFacadeInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->companyUnitAddressDefaultShippingDependencyProvider =
+        $this->dependencyProvider =
             new CompanyUnitAddressDefaultShippingDependencyProvider();
     }
 
@@ -97,7 +85,7 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
 
         $this->locatorMock->expects($this->atLeastOnce())
             ->method('__call')
-            ->withConsecutive(['companyBusinessUnit'], ['companyUnitAddress'], ['event'])
+            ->withConsecutive(['companyBusinessUnit'], ['companyUnitAddress'])
             ->willReturn($this->bundleProxyMock);
 
         $this->bundleProxyMock->expects($this->atLeastOnce())
@@ -106,27 +94,21 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
             ->willReturnOnConsecutiveCalls(
                 $this->companyBusinessUnitFacadeMock,
                 $this->companyUnitAddressFacadeMock,
-                $this->eventFacadeMock
             );
 
         $this->assertEquals(
             $this->containerMock,
-            $this->companyUnitAddressDefaultShippingDependencyProvider->provideBusinessLayerDependencies($this->containerMock)
+            $this->dependencyProvider->provideBusinessLayerDependencies($this->containerMock),
         );
 
         $this->assertInstanceOf(
             CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge::class,
-            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT]
+            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT],
         );
 
         $this->assertInstanceOf(
             CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge::class,
-            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS]
-        );
-
-        $this->assertInstanceOf(
-            CompanyUnitAddressDefaultShippingiToEventFacadeBridge::class,
-            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_EVENT]
+            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS],
         );
     }
 }

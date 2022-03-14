@@ -86,8 +86,8 @@ class DefaultShippingCompanyUnitAddressPostSavePluginTest extends Unit
         $this->assertInstanceOf(
             CompanyUnitAddressResponseTransfer::class,
             $this->defaultShippingCompanyUnitAddressPostSavePlugin->postSave(
-                $this->companyUnitAddressTransferMock
-            )
+                $this->companyUnitAddressTransferMock,
+            ),
         );
     }
 }

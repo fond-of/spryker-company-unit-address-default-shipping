@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping;
 
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -10,9 +9,15 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
-    public const FACADE_EVENT = 'FACADE_EVENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,10 +29,8 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCompanyBusinessUnitFacade($container);
-        $container = $this->addCompanyUnitAddressFacade($container);
-        $container = $this->addEventFacade($container);
 
-        return $container;
+        return $this->addCompanyUnitAddressFacade($container);
     }
 
     /**
@@ -39,7 +42,7 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
     {
         $container[static::FACADE_COMPANY_BUSINESS_UNIT] = static function (Container $container) {
             return new CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         };
 
@@ -55,22 +58,8 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
     {
         $container[static::FACADE_COMPANY_UNIT_ADDRESS] = static function (Container $container) {
             return new CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge(
-                $container->getLocator()->companyUnitAddress()->facade()
+                $container->getLocator()->companyUnitAddress()->facade(),
             );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addEventFacade(Container $container): Container
-    {
-        $container[static::FACADE_EVENT] = static function (Container $container) {
-            return new CompanyUnitAddressDefaultShippingiToEventFacadeBridge($container->getLocator()->event()->facade());
         };
 
         return $container;
