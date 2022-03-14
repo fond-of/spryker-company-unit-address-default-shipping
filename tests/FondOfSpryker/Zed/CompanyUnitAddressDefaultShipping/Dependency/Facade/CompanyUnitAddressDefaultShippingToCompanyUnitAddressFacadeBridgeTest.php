@@ -3,12 +3,8 @@
 namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\ProductListBrandConnector\Business\ProductListBrandConnectorFacadeInterface;
-use Generated\Shared\Transfer\BrandRelationTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface;
 
 class CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridgeTest extends Unit
@@ -55,7 +51,7 @@ class CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridgeTest exte
         $this->assertInstanceOf(
             CompanyUnitAddressCollectionTransfer::class,
             $this->companyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge
-                ->getCompanyUnitAddressCollection($this->companyUnitAddressCriteriaFilterTransferMock)
+                ->getCompanyUnitAddressCollection($this->companyUnitAddressCriteriaFilterTransferMock),
         );
     }
 }

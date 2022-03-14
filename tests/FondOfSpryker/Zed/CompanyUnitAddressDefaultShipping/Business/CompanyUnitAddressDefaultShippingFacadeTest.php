@@ -76,8 +76,8 @@ class CompanyUnitAddressDefaultShippingFacadeTest extends Unit
         $this->assertInstanceOf(
             CompanyUnitAddressResponseTransfer::class,
             $this->companyUnitAddressDefaultShippingFacade->saveDefaultShippingAddressIdToCompanyBusinessUnit(
-                $this->companyUnitAddressTransferMock
-            )
+                $this->companyUnitAddressTransferMock,
+            ),
         );
     }
 }

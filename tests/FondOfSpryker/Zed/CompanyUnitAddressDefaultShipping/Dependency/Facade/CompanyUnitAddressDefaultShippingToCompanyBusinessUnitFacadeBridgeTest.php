@@ -51,7 +51,7 @@ class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridgeTest ext
         $this->assertInstanceOf(
             CompanyBusinessUnitResponseTransfer::class,
             $this->companyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge
-                ->update($this->companyBusinessUnitTransferMock)
+                ->update($this->companyBusinessUnitTransferMock),
         );
     }
 }

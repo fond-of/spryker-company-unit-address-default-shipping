@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\CompanyBusinessUnitDefaultShippingAddress\Business\M
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model\CompanyBusinessUnitDefaultShippingAddressSaver;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
@@ -45,11 +44,6 @@ class CompanyBusinessUnitDefaultShippingAddressSaverTest extends Unit
     protected $companyUnitAddressTransferMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingiToEventFacadeInterface
-     */
-    protected $eventFacadeMock;
-
-    /**
      * @return void
      */
     protected function _before(): void
@@ -63,11 +57,6 @@ class CompanyBusinessUnitDefaultShippingAddressSaverTest extends Unit
 
         $this->companyUnitAddressFacadeMock = $this
             ->getMockBuilder(CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->eventFacadeMock = $this
-            ->getMockBuilder(CompanyUnitAddressDefaultShippingiToEventFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -88,9 +77,8 @@ class CompanyBusinessUnitDefaultShippingAddressSaverTest extends Unit
 
         $this->companyBusinessUnitDefaultShippingAddressSaver =
             new CompanyBusinessUnitDefaultShippingAddressSaver(
-              $this->companyBusinessUnitFacadeMock,
-              $this->companyUnitAddressFacadeMock,
-              $this->eventFacadeMock
+                $this->companyBusinessUnitFacadeMock,
+                $this->companyUnitAddressFacadeMock,
             );
     }
 
@@ -128,12 +116,12 @@ class CompanyBusinessUnitDefaultShippingAddressSaverTest extends Unit
 
         $this->assertInstanceOf(
             CompanyUnitAddressResponseTransfer::class,
-            $companyUnitAddressResponseTransfer
+            $companyUnitAddressResponseTransfer,
         );
 
         $this->assertEquals(
             true,
-            $companyUnitAddressResponseTransfer->getIsSuccessful()
+            $companyUnitAddressResponseTransfer->getIsSuccessful(),
         );
     }
 }
