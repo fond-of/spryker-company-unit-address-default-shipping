@@ -15,8 +15,6 @@ class CompanyUnitAddressDefaultShippingPersistenceFactory extends AbstractPersis
 {
     /**
      * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     * 
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {

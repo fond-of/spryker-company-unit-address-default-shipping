@@ -18,7 +18,7 @@ interface CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     * 
+     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(

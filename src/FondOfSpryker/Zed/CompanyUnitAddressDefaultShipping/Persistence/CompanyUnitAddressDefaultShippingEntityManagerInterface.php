@@ -9,7 +9,7 @@ interface CompanyUnitAddressDefaultShippingEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param int|null $defaultShippingAddress
-     * 
+     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function saveCompanyBusinessUnitDefaultShippingAddress(
