@@ -15,4 +15,13 @@ interface CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
     public function update(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * 
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getCompanyBusinessUnitById(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer;
 }

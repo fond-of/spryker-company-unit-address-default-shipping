@@ -18,7 +18,7 @@ class CompanyUnitAddressDefaultShippingBusinessFactory extends AbstractBusinessF
     {
         return new CompanyBusinessUnitDefaultShippingAddressSaver(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyUnitAddressFacade(),
+            $this->getEntityManager()
         );
     }
 
