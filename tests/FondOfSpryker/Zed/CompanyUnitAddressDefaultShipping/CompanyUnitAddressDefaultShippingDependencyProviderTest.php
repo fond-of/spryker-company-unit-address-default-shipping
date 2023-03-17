@@ -4,10 +4,9 @@ namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
-use Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Locator;
 
@@ -39,11 +38,6 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
     protected $companyBusinessUnitFacadeMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface
-     */
-    protected $companyUnitAddressFacadeMock;
-
-    /**
      * @return void
      */
     protected function _before(): void
@@ -66,10 +60,6 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUnitAddressFacadeMock = $this->getMockBuilder(CompanyUnitAddressFacadeInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $this->dependencyProvider =
             new CompanyUnitAddressDefaultShippingDependencyProvider();
     }
@@ -85,7 +75,7 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
 
         $this->locatorMock->expects($this->atLeastOnce())
             ->method('__call')
-            ->withConsecutive(['companyBusinessUnit'], ['companyUnitAddress'])
+            ->withConsecutive(['companyBusinessUnit'])
             ->willReturn($this->bundleProxyMock);
 
         $this->bundleProxyMock->expects($this->atLeastOnce())
@@ -93,7 +83,6 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
             ->with('facade')
             ->willReturnOnConsecutiveCalls(
                 $this->companyBusinessUnitFacadeMock,
-                $this->companyUnitAddressFacadeMock,
             );
 
         $this->assertEquals(
@@ -105,10 +94,21 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
             CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge::class,
             $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT],
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvidePersistenceLayerDependencies(): void
+    {
+        $this->assertEquals(
+            $this->containerMock,
+            $this->dependencyProvider->providePersistenceLayerDependencies($this->containerMock),
+        );
 
         $this->assertInstanceOf(
-            CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge::class,
-            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS],
+            SpyCompanyBusinessUnitQuery::class,
+            $this->containerMock[CompanyUnitAddressDefaultShippingDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT],
         );
     }
 }

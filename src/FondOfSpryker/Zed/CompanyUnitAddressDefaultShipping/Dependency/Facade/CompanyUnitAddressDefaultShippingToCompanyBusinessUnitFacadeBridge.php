@@ -31,4 +31,15 @@ class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge impleme
     ): CompanyBusinessUnitResponseTransfer {
         return $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getCompanyBusinessUnitById(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    }
 }
