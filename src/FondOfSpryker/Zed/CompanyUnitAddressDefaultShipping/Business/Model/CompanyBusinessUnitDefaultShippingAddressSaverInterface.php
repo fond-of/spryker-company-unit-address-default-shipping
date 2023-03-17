@@ -10,7 +10,7 @@ interface CompanyBusinessUnitDefaultShippingAddressSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function saveDefaultShippingAddressIdToCompanyBusinessUnit(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
