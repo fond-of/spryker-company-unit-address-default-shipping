@@ -6,6 +6,8 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
+ * @codeCoverageIgnore
+ *
  * @method \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingPersistenceFactory getFactory()
  */
 class CompanyUnitAddressDefaultShippingEntityManager extends AbstractEntityManager implements CompanyUnitAddressDefaultShippingEntityManagerInterface

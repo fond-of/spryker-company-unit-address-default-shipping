@@ -4,6 +4,9 @@ namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
+/**
+ * @codeCoverageIgnore
+ */
 interface CompanyUnitAddressDefaultShippingEntityManagerInterface
 {
     /**

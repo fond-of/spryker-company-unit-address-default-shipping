@@ -6,7 +6,6 @@ use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model\CompanyBu
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model\CompanyBusinessUnitDefaultShippingAddressSaverInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\CompanyUnitAddressDefaultShippingDependencyProvider;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class CompanyUnitAddressDefaultShippingBusinessFactory extends AbstractBusinessFactory
@@ -28,13 +27,5 @@ class CompanyUnitAddressDefaultShippingBusinessFactory extends AbstractBusinessF
     protected function getCompanyBusinessUnitFacade(): CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
-     */
-    protected function getCompanyUnitAddressFacade(): CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
-    {
-        return $this->getProvidedDependency(CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS);
     }
 }

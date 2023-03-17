@@ -6,7 +6,7 @@ use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Business\Model\CompanyBusinessUnitDefaultShippingAddressSaverInterface;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\CompanyUnitAddressDefaultShippingDependencyProvider;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeInterface;
-use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface;
+use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingEntityManager;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyUnitAddressDefaultShippingBusinessFactoryTest extends Unit
@@ -27,9 +27,9 @@ class CompanyUnitAddressDefaultShippingBusinessFactoryTest extends Unit
     protected $companyBusinessUnitFacadeMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingEntityManager
      */
-    protected $companyUnitAddressFacadeMock;
+    protected $entityManagerMockMock;
 
     /**
      * @return void
@@ -49,13 +49,14 @@ class CompanyUnitAddressDefaultShippingBusinessFactoryTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUnitAddressFacadeMock = $this
-            ->getMockBuilder(CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeInterface::class)
+        $this->entityManagerMockMock = $this
+            ->getMockBuilder(CompanyUnitAddressDefaultShippingEntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->factory = new CompanyUnitAddressDefaultShippingBusinessFactory();
         $this->factory->setContainer($this->containerMock);
+        $this->factory->setEntityManager($this->entityManagerMockMock);
     }
 
     /**
@@ -69,13 +70,8 @@ class CompanyUnitAddressDefaultShippingBusinessFactoryTest extends Unit
 
         $this->containerMock->expects($this->atLeastOnce())
             ->method('get')
-            ->withConsecutive(
-                [CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT],
-                [CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS],
-            )->willReturnOnConsecutiveCalls(
-                $this->companyBusinessUnitFacadeMock,
-                $this->companyUnitAddressFacadeMock,
-            );
+            ->with(CompanyUnitAddressDefaultShippingDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT)
+            ->willReturn($this->companyBusinessUnitFacadeMock);
 
         $this->assertInstanceOf(
             CompanyBusinessUnitDefaultShippingAddressSaverInterface::class,

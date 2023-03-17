@@ -18,11 +18,6 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
     /**
      * @var string
      */
-    public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
-
-    /**
-     * @var string
-     */
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
 
     /**
@@ -34,9 +29,7 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addCompanyBusinessUnitFacade($container);
-
-        return $this->addCompanyUnitAddressFacade($container);
+        return $this->addCompanyBusinessUnitFacade($container);
     }
 
     /**
@@ -48,9 +41,7 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->addCompanyBusinessUnitQuery($container);
-
-        return $container;
+        return $this->addCompanyBusinessUnitQuery($container);
     }
 
     /**
@@ -63,22 +54,6 @@ class CompanyUnitAddressDefaultShippingDependencyProvider extends AbstractBundle
         $container[static::FACADE_COMPANY_BUSINESS_UNIT] = static function (Container $container) {
             return new CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge(
                 $container->getLocator()->companyBusinessUnit()->facade(),
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUnitAddressFacade(Container $container): Container
-    {
-        $container[static::FACADE_COMPANY_UNIT_ADDRESS] = static function (Container $container) {
-            return new CompanyUnitAddressDefaultShippingToCompanyUnitAddressFacadeBridge(
-                $container->getLocator()->companyUnitAddress()->facade(),
             );
         };
 

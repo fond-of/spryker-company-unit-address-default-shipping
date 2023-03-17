@@ -48,8 +48,7 @@ class CompanyBusinessUnitDefaultShippingAddressSaver implements CompanyBusinessU
             return $companyUnitAddressResponseTransfer;
         }
 
-        $companyBusinessUnitTransfer = $this
-            ->saveCompanyBusinessUnitDefaultShippingAddress($companyUnitAddressTransfer);
+        $this->saveCompanyBusinessUnitDefaultShippingAddress($companyUnitAddressTransfer);
 
         return $companyUnitAddressResponseTransfer->setIsSuccessful(true);
     }

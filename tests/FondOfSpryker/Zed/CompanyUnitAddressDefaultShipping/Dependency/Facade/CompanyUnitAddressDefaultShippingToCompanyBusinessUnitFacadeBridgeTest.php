@@ -54,4 +54,16 @@ class CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridgeTest ext
                 ->update($this->companyBusinessUnitTransferMock),
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyBusinessUnitById(): void
+    {
+        $this->assertInstanceOf(
+            CompanyBusinessUnitTransfer::class,
+            $this->companyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge
+                ->getCompanyBusinessUnitById($this->companyBusinessUnitTransferMock),
+        );
+    }
 }
