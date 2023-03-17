@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Dependency\Facade\CompanyUnitAddressDefaultShippingToCompanyBusinessUnitFacadeBridge;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
@@ -83,7 +82,7 @@ class CompanyUnitAddressDefaultShippingDependencyProviderTest extends Unit
             ->method('__call')
             ->with('facade')
             ->willReturnOnConsecutiveCalls(
-                $this->companyBusinessUnitFacadeMock
+                $this->companyBusinessUnitFacadeMock,
             );
 
         $this->assertEquals(
