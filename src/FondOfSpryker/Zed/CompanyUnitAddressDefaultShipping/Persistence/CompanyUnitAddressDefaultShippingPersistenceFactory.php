@@ -8,8 +8,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @codeCoverageIgnore
- *
- * @method \FondOfSpryker\Zed\CompanyUnitAddressDefaultShipping\Persistence\CompanyUnitAddressDefaultShippingRepositoryInterface getRepository()
  */
 class CompanyUnitAddressDefaultShippingPersistenceFactory extends AbstractPersistenceFactory
 {
